@@ -36,7 +36,7 @@ ClinicalTrials.gov API  →  Celery Beat (nightly)
 ### 1. Clone and set up environment
 
 ```bash
-git clone <your-repo>
+git clone https://github.com/harshakhiltaylor/healthsignal.git
 cd healthsignal
 cp .env.example .env
 # Fill in your free-tier API keys (see .env.example)
