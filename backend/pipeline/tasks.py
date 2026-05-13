@@ -61,5 +61,5 @@ def process_single_trial(trial_dict: dict):
     """
     from agents.router import run_agent_dag
     logger.info(f"Processing trial {trial_dict.get('id')}")
-    result = _run_async(run_agent_dag(trial_dict))
+    _run_async(run_agent_dag(trial_dict))
     return {"trial_id": trial_dict.get("id"), "status": "processed"}

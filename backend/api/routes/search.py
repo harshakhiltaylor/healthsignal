@@ -6,10 +6,9 @@ import logging
 import time
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, text
+from sqlalchemy import text
 from prometheus_client import Histogram
 from db.session import get_db
-from db.models import Trial, TrialChunk
 from models.schemas import SearchRequest, SearchResponse, SearchResult, TrialBase
 from agents.embed import _embed_text
 from api.auth import get_current_user_id

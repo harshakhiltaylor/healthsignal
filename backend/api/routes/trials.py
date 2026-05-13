@@ -28,16 +28,16 @@ async def get_trials(
     if conditions:
         count_stmt = count_stmt.where(*conditions)
     total = await db.scalar(count_stmt)
-    
+
     # Get trials
     stmt = select(Trial)
     if conditions:
         stmt = stmt.where(*conditions)
     stmt = stmt.order_by(Trial.created_at.desc()).offset(skip).limit(limit)
-    
+
     result = await db.execute(stmt)
     trials = result.scalars().all()
-    
+
     return {
         "total": total,
         "items": [TrialDetail.model_validate(t) for t in trials],

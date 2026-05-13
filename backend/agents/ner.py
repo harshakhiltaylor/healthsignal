@@ -67,7 +67,7 @@ async def run_ner(text: str) -> dict:
     # e.g. "Tocilizumab", "AXS-14", "ALKS 2680"
     proper_drug = re.findall(r'\b[A-Z][a-z]+-?\d*\b|\b[A-Z]{2,}-?\d+\b', truncated)
     for w in proper_drug:
-        if len(w) >= 4 and not w.lower() in {"phase", "study", "trial", "this", "that", "with"}:
+        if len(w) >= 4 and w.lower() not in {"phase", "study", "trial", "this", "that", "with"}:
             drugs.add(w)
 
     logger.debug(f"NER extracted: {len(drugs)} drugs, {len(conditions)} conditions")

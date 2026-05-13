@@ -8,7 +8,6 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from prometheus_client import make_asgi_app
-from config import settings
 from db.session import init_db
 from api.routes import search, rag, evals, ingest, health, trials
 

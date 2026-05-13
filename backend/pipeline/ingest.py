@@ -3,7 +3,6 @@ Ingestion pipeline — ClinicalTrials.gov v2 API
 Free, no API key required.
 """
 import asyncio
-import time
 import logging
 from typing import AsyncGenerator
 import httpx

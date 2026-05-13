@@ -1,5 +1,5 @@
 import asyncio
-import asyncpg
+import sqlalchemy as org_sqlalchemy
 from config import settings
 
 async def test():
@@ -16,6 +16,5 @@ async def test():
     except Exception as e:
         print(f"Error: {e}")
 
-import sqlalchemy as org_sqlalchemy
 if __name__ == "__main__":
     asyncio.run(test())

@@ -13,7 +13,7 @@ def get_redis() -> redis.Redis:
         try:
             # We use Upstash rediss:// URL
             _redis_client = redis.from_url(
-                settings.redis_url, 
+                settings.redis_url,
                 decode_responses=True,
                 ssl_cert_reqs=None if "upstash" in settings.redis_url else "required"
             )

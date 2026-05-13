@@ -1,10 +1,7 @@
 """Ingest status and manual trigger endpoints."""
 import logging
-from fastapi import APIRouter, Depends, BackgroundTasks
-from fastapi.responses import JSONResponse
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import APIRouter, BackgroundTasks
 from sqlalchemy import select
-from db.session import get_db
 from db.models import IngestLog
 from models.schemas import IngestStatusOut
 
@@ -47,7 +44,7 @@ async def trigger_ingest(background_tasks: BackgroundTasks, query: str = ""):
     """Manually trigger an ingestion run. Tries Celery first, falls back to background thread."""
     from db.session import AsyncSessionLocal
     from db.models import IngestLog
-    
+
     log_id = None
     try:
         async with AsyncSessionLocal() as db:

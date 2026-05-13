@@ -4,7 +4,6 @@ Uses free HF Inference API for similarity scoring.
 """
 import hashlib
 import logging
-from typing import Optional
 import httpx
 from tenacity import retry, stop_after_attempt, wait_exponential
 from config import settings
@@ -12,7 +11,7 @@ from config import settings
 logger = logging.getLogger(__name__)
 
 HF_SIMILARITY_URL = (
-    f"https://api-inference.huggingface.co/models/sentence-transformers/all-MiniLM-L6-v2"
+    "https://api-inference.huggingface.co/models/sentence-transformers/all-MiniLM-L6-v2"
 )
 
 

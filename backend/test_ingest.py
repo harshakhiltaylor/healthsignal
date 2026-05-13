@@ -1,5 +1,4 @@
 import asyncio
-from pipeline.tasks import run_nightly_ingest
 from pipeline._ingest_runner import ingest_all
 
 async def test():
