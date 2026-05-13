@@ -92,7 +92,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run eval suite
-        run: python -m scripts.run_eval
+        working-directory: .
+        run: PYTHONPATH=backend python scripts/run_eval.py
 
   lint:
     runs-on: ubuntu-latest
