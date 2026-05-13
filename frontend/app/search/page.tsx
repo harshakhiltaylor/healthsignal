@@ -67,8 +67,8 @@ export default function SearchPage() {
     try {
       const token = await getToken();
       const res = await api.search(query, {
-        phase_filter: phase || undefined,
-        status_filter: status || undefined,
+        phase: phase || undefined,
+        status: status || undefined,
       }, token || undefined);
       setResults(res.results);
       setLatency(Date.now() - t0);
