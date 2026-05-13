@@ -1,0 +1,42 @@
+[
+  {
+    "question": "What Phase 2 trials are studying GLP-1 receptor agonists for obesity?",
+    "ground_truth": "Phase 2 clinical trials investigating GLP-1 receptor agonists for obesity treatment."
+  },
+  {
+    "question": "Which oncology trials are currently recruiting for lung cancer?",
+    "ground_truth": "Active recruiting trials in oncology for lung cancer treatment."
+  },
+  {
+    "question": "What are recent immunotherapy trials for melanoma?",
+    "ground_truth": "Clinical trials using immunotherapy approaches for melanoma."
+  },
+  {
+    "question": "Are there any pediatric trials for rare metabolic diseases?",
+    "ground_truth": "Pediatric clinical trials targeting rare metabolic conditions."
+  },
+  {
+    "question": "What CNS trials are in Phase 3 for Alzheimer's disease?",
+    "ground_truth": "Phase 3 clinical trials for Alzheimer's disease treatment."
+  },
+  {
+    "question": "Which cardiology trials are studying heart failure with reduced ejection fraction?",
+    "ground_truth": "Clinical trials studying heart failure with reduced ejection fraction (HFrEF)."
+  },
+  {
+    "question": "What are active trials for Type 2 diabetes using SGLT2 inhibitors?",
+    "ground_truth": "Active clinical trials using SGLT2 inhibitors for Type 2 diabetes management."
+  },
+  {
+    "question": "Are there any gene therapy trials for sickle cell disease?",
+    "ground_truth": "Gene therapy clinical trials targeting sickle cell disease."
+  },
+  {
+    "question": "What rheumatology trials are recruiting for rheumatoid arthritis?",
+    "ground_truth": "Recruiting clinical trials for rheumatoid arthritis in rheumatology."
+  },
+  {
+    "question": "Which Phase 1 trials are studying CAR-T cell therapy for leukemia?",
+    "ground_truth": "Phase 1 CAR-T cell therapy trials for leukemia treatment."
+  }
+]

@@ -1,0 +1,73 @@
+
+> healthsignal-frontend@1.0.0 dev
+> next dev
+
+  ▲ Next.js 14.2.4
+  - Local:        http://localhost:3000
+  - Environments: .env.local, .env
+
+ ✓ Starting...
+ ✓ Ready in 2.1s
+ ✓ Compiled /middleware in 210ms (183 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 1547ms (878 modules)
+ GET / 200 in 1648ms
+ ✓ Compiled in 78ms (352 modules)
+ ✓ Compiled /icon.svg in 75ms (537 modules)
+ GET /icon.svg?ba4d35a348afdec1 200 in 104ms
+ ✓ Compiled /trials in 140ms (883 modules)
+ GET /trials 200 in 191ms
+ ✓ Compiled /_not-found in 64ms (886 modules)
+ GET /sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fsearch 404 in 86ms
+ GET /sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fsearch 404 in 19ms
+ GET /sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fask 404 in 18ms
+ ○ Compiling /evals ...
+ ✓ Compiled /evals in 656ms (1924 modules)
+ GET /evals 200 in 711ms
+ GET /sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fsearch 404 in 20ms
+ GET /sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fsearch 404 in 17ms
+ ✓ Compiled in 92ms (873 modules)
+ ✓ Compiled /_not-found in 60ms (1347 modules)
+ GET /sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fsearch&_rsc=1cxav 404 in 108ms
+ GET /sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fsearch 404 in 57ms
+ ✓ Compiled in 93ms (875 modules)
+ GET /sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fsearch&_rsc=1cxav 404 in 5ms
+ GET /sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fsearch 404 in 12ms
+ ✓ Compiled in 64ms (1530 modules)
+ ✓ Compiled in 83ms (875 modules)
+ ✓ Compiled /sign-in/[[...sign-in]] in 269ms (1534 modules)
+ GET /sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fsearch&_rsc=1cxav 200 in 456ms
+ GET /sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fsearch&_rsc=dy5to 200 in 3ms
+ GET /sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fsearch&_rsc=dy5to 200 in 3ms
+ GET /sign-in/SignIn_clerk_catchall_check_1778659964087 200 in 17ms
+ GET /sign-in?redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fsearch 200 in 17ms
+ GET /sign-in/SignIn_clerk_catchall_check_1778659974653 200 in 21ms
+ GET /sign-in/sso-callback?after_sign_in_url=http%3A%2F%2Flocalhost%3A3000%2Fask&after_sign_up_url=http%3A%2F%2Flocalhost%3A3000%2Fask&redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fsearch 200 in 17ms
+ GET /sign-in/sso-callback/SignIn_clerk_catchall_check_1778660014600 200 in 16ms
+ POST /sign-in/sso-callback?after_sign_in_url=http%3A%2F%2Flocalhost%3A3000%2Fask&after_sign_up_url=http%3A%2F%2Flocalhost%3A3000%2Fask&redirect_url=http%3A%2F%2Flocalhost%3A3000%2Fsearch 200 in 22ms
+ ✓ Compiled /search in 180ms (1439 modules)
+ GET /search?_rsc=yee27 200 in 6ms
+ ✓ Compiled /ask in 350ms (1786 modules)
+ GET /ask 200 in 394ms
+ GET /search 200 in 22ms
+ ✓ Compiled / in 69ms (740 modules)
+ GET / 200 in 128ms
+ GET /search 200 in 21ms
+ GET /trials 200 in 20ms
+ GET /search 200 in 15ms
+ GET /ask 200 in 26ms
+ GET /trials 200 in 33ms
+ GET / 200 in 26ms
+ GET / 200 in 20ms
+ GET /search 200 in 21ms
+ GET /trials 200 in 17ms
+ GET /trials 200 in 16ms
+ GET /search 200 in 18ms
+ GET /ask 200 in 18ms
+ GET /search 200 in 19ms
+ ✓ Compiled /evals in 274ms (1260 modules)
+ GET /evals 200 in 377ms
+ GET / 200 in 27ms
+ GET /evals 200 in 19ms
+ GET /ask 200 in 46ms
+ GET /trials 200 in 21ms

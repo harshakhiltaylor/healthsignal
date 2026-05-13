@@ -1,0 +1,36 @@
+# Minimal core requirements — installs fast, gets the server running
+fastapi==0.111.0
+uvicorn[standard]==0.30.1
+pydantic>=2.7.4
+pydantic-settings>=2.3.0
+
+# Database
+sqlalchemy[asyncio]>=2.0.36
+asyncpg>=0.30.0
+alembic>=1.14.0
+pgvector>=0.3.6
+
+# HTTP / async
+httpx==0.27.0
+requests==2.32.3
+
+# Task queue
+celery==5.4.0
+redis==5.0.7
+
+# Utilities
+python-dotenv==1.0.1
+tenacity==8.3.0
+structlog==24.2.0
+
+# Observability
+prometheus-client==0.20.0
+
+# HuggingFace (lightweight)
+huggingface-hub==0.23.4
+
+# LangChain (lightweight, no heavy deps)
+langchain>=0.2.5
+langchain-core>=0.2.22
+langchain-groq>=0.1.6
+langsmith>=0.1.77
