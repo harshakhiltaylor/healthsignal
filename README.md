@@ -147,9 +147,9 @@ Every RAG response is scored on:
 
 Scores are written to the `eval_results` table. A GitHub Actions job runs the eval suite nightly and fails CI if faithfulness drops below 0.80.
 
-## Resume Metrics You Can Claim
+## Metrics
 
-After running this for 2+ weeks you will have:
+Running this for 2+ weeks we will have:
 - 400k+ trial records indexed
 - P95 semantic search latency benchmarks
 - RAGAS faithfulness score on held-out test set
