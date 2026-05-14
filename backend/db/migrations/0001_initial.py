@@ -47,7 +47,7 @@ def upgrade():
         sa.Column("trial_id", sa.String(64), sa.ForeignKey("trials.id"), nullable=False),
         sa.Column("chunk_index", sa.Integer),
         sa.Column("chunk_text", sa.Text, nullable=False),
-        sa.Column("embedding", Vector(768)),
+        sa.Column("embedding", Vector(384)),
         sa.Column("created_at", sa.DateTime, server_default=sa.func.now()),
     )
 

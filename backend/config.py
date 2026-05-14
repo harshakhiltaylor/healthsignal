@@ -24,9 +24,9 @@ class Settings(BaseSettings):
     # HuggingFace (free serverless inference)
     hf_token: str = ""
     hf_ner_model: str = "d4data/biomedical-ner-all"
-    hf_zsc_model: str = "cross-encoder/nli-deberta-v3-base"
-    hf_summary_model: str = "facebook/bart-large-cnn"
-    hf_embed_model: str = "NLP4Science/pubmedbert-large-uncased"
+    hf_zsc_model: str = "facebook/bart-large-mnli"
+    hf_summary_model: str = "sshleifer/distilbart-cnn-12-6"
+    hf_embed_model: str = "sentence-transformers/all-MiniLM-L6-v2"
 
     # ClinicalTrials.gov API (no key needed)
     ct_api_base: str = "https://clinicaltrials.gov/api/v2"
@@ -36,7 +36,7 @@ class Settings(BaseSettings):
     # Pipeline
     embed_chunk_size: int = 512
     embed_chunk_overlap: int = 50
-    vector_dim: int = 768
+    vector_dim: int = 384
 
     # Eval
     ragas_faithfulness_threshold: float = 0.80
