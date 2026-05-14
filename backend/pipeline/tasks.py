@@ -73,12 +73,14 @@ def re_embed_all_trials():
     """
     async def _re_embed():
         from db.session import AsyncSessionLocal
-        from db.models import Trial
+        from db.models import Trial, TrialChunk
         from agents.router import run_agent_dag
         from sqlalchemy import select
 
         async with AsyncSessionLocal() as db:
-            result = await db.execute(select(Trial))
+            result = await db.execute(
+                select(Trial).outerjoin(TrialChunk).where(TrialChunk.id == None)
+            )
             trials = result.scalars().all()
 
         logger.info(f"Re-embedding {len(trials)} trials from database...")
