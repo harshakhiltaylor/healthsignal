@@ -4,7 +4,7 @@ Supports metadata filters: phase, status, therapeutic_area.
 """
 import logging
 import time
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
 from prometheus_client import Histogram
@@ -26,7 +26,7 @@ async def semantic_search(req: SearchRequest, db: AsyncSession = Depends(get_db)
     # Embed the query using same model as documents
     query_embedding = await _embed_text(req.query)
     if query_embedding is None:
-        return SearchResponse(query=req.query, results=[], total=0)
+        raise HTTPException(status_code=503, detail="Unable to embed query. The embedding model may still be loading — please retry in 30 seconds.")
 
     # Build filter clause
     filters = []
