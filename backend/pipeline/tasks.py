@@ -63,3 +63,50 @@ def process_single_trial(trial_dict: dict):
     logger.info(f"Processing trial {trial_dict.get('id')}")
     _run_async(run_agent_dag(trial_dict))
     return {"trial_id": trial_dict.get("id"), "status": "processed"}
+
+
+@celery_app.task(name="pipeline.tasks.re_embed_all_trials")
+def re_embed_all_trials():
+    """
+    Re-embed ALL trials already in the database, bypassing fetch/dedup.
+    Useful when the embedding model changes or embeddings are missing/corrupt.
+    """
+    async def _re_embed():
+        from db.session import AsyncSessionLocal
+        from db.models import Trial
+        from agents.router import run_agent_dag
+        from sqlalchemy import select
+
+        async with AsyncSessionLocal() as db:
+            result = await db.execute(select(Trial))
+            trials = result.scalars().all()
+
+        logger.info(f"Re-embedding {len(trials)} trials from database...")
+        success, failed = 0, 0
+
+        for trial in trials:
+            try:
+                trial_dict = {
+                    "id": trial.id,
+                    "title": trial.title or "",
+                    "condition": trial.condition or "",
+                    "intervention": trial.intervention or "",
+                    "brief_summary": trial.brief_summary or "",
+                    "phase": trial.phase,
+                    "sponsor": trial.sponsor,
+                    "start_date": trial.start_date,
+                    "completion_date": trial.completion_date,
+                    "enrollment": trial.enrollment,
+                }
+                await run_agent_dag(trial_dict)
+                success += 1
+                if success % 10 == 0:
+                    logger.info(f"Re-embed progress: {success}/{len(trials)} done")
+            except Exception as e:
+                logger.error(f"Re-embed failed for {trial.id}: {e}")
+                failed += 1
+
+        logger.info(f"Re-embed complete: {success} succeeded, {failed} failed")
+        return {"success": success, "failed": failed, "total": len(trials)}
+
+    return _run_async(_re_embed())

@@ -63,3 +63,16 @@ async def trigger_ingest(background_tasks: BackgroundTasks, query: str = ""):
         logger.warning(f"Celery unavailable ({e}), running ingest in background thread")
         background_tasks.add_task(_run_ingest_sync, query, log_id)
         return {"status": "queued", "message": "Celery unavailable — running ingest directly in background"}
+
+
+@router.post("/ingest/re-embed")
+async def trigger_re_embed():
+    """Re-embed all existing trials in the database. Bypasses fetch/dedup."""
+    try:
+        from pipeline.tasks import re_embed_all_trials
+        result = re_embed_all_trials.delay()
+        return {"status": "queued", "message": f"Re-embed task queued (task_id={result.id})"}
+    except Exception as e:
+        logger.error(f"Failed to queue re-embed task: {e}")
+        return {"status": "error", "message": str(e)}
+
