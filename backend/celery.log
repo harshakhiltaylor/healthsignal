@@ -962,3 +962,633 @@ Trying again in 6.00 seconds... (3/100)
 [2026-05-13 10:57:54,851: INFO/MainProcess] Connected to rediss://default:**@super-heron-89606.upstash.io:6379//
 [2026-05-13 10:57:55,067: INFO/MainProcess] mingle: searching for neighbors
 [2026-05-13 10:57:56,259: INFO/MainProcess] mingle: all alone
+[2026-05-13 21:32:27,704: WARNING/MainProcess] consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 454, in send_packed_command
+    self._sock.sendall(item)
+    ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1263, in sendall
+    v = self.send(byte_view[count:])
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1232, in send
+    return self._sslobj.write(data)
+           ~~~~~~~~~~~~~~~~~~^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/consumer/consumer.py", line 340, in start
+    blueprint.start(self)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/consumer/consumer.py", line 746, in start
+    c.loop(*c.loop_args())
+    ~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/loops.py", line 97, in asynloop
+    next(loop)
+    ~~~~^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/asynchronous/hub.py", line 312, in create_loop
+    poll_timeout = fire_timers(propagate=propagate) if scheduled else 1
+                   ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/asynchronous/hub.py", line 149, in fire_timers
+    entry()
+    ~~~~~^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/asynchronous/timer.py", line 70, in __call__
+    return self.fun(*self.args, **self.kwargs)
+           ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/asynchronous/timer.py", line 137, in _reschedules
+    return fun(*args, **kwargs)
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 564, in maybe_restore_messages
+    return channel.qos.restore_visible(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        num=channel.unacked_restore_limit,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 417, in restore_visible
+    with Mutex(client, self.unacked_mutex_key,
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               self.unacked_mutex_expire):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 173, in Mutex
+    lock_acquired = lock.acquire(blocking=False)
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/lock.py", line 210, in acquire
+    if self.do_acquire(token):
+       ~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/lock.py", line 226, in do_acquire
+    if self.redis.set(self.name, token, nx=True, px=timeout):
+       ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/commands/core.py", line 2342, in set
+    return self.execute_command("SET", *pieces, **options)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 545, in execute_command
+    return conn.retry.call_with_retry(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        lambda: self._send_command_parse_response(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        lambda error: self._disconnect_raise(conn, error),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/retry.py", line 49, in call_with_retry
+    fail(error)
+    ~~~~^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 549, in <lambda>
+    lambda error: self._disconnect_raise(conn, error),
+                  ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 535, in _disconnect_raise
+    raise error
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/retry.py", line 46, in call_with_retry
+    return do()
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 546, in <lambda>
+    lambda: self._send_command_parse_response(
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        conn, command_name, *args, **options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 521, in _send_command_parse_response
+    conn.send_command(*args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 476, in send_command
+    self.send_packed_command(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._command_packer.pack(*args),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        check_health=kwargs.get("check_health", True),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 449, in send_packed_command
+    self.check_health()
+    ~~~~~~~~~~~~~~~~~^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 441, in check_health
+    self.retry.call_with_retry(self._send_ping, self._ping_failed)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/retry.py", line 51, in call_with_retry
+    raise error
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/retry.py", line 46, in call_with_retry
+    return do()
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 430, in _send_ping
+    self.send_command("PING", check_health=False)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 476, in send_command
+    self.send_packed_command(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._command_packer.pack(*args),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        check_health=kwargs.get("check_health", True),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 465, in send_packed_command
+    raise ConnectionError(f"Error {errno} while writing to socket. {errmsg}.")
+redis.exceptions.ConnectionError: Error 32 while writing to socket. Broken pipe.
+[2026-05-13 21:32:32,264: WARNING/MainProcess] /Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/consumer/consumer.py:391: CPendingDeprecationWarning: 
+In Celery 5.1 we introduced an optional breaking change which
+on connection loss cancels all currently executed tasks with late acknowledgement enabled.
+These tasks cannot be acknowledged as the connection is gone, and the tasks are automatically redelivered
+back to the queue. You can enable this behavior using the worker_cancel_long_running_tasks_on_connection_loss
+setting. In Celery 5.1 it is set to False by default. The setting will be set to True by default in Celery 6.0.
+
+  warnings.warn(CANCEL_TASKS_BY_DEFAULT, CPendingDeprecationWarning)
+
+[2026-05-13 21:32:33,556: INFO/MainProcess] Connected to rediss://default:**@super-heron-89606.upstash.io:6379//
+[2026-05-13 21:32:33,834: INFO/MainProcess] mingle: searching for neighbors
+[2026-05-13 21:32:35,379: INFO/MainProcess] mingle: all alone
+[2026-05-13 21:39:00,277: WARNING/MainProcess] consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 454, in send_packed_command
+    self._sock.sendall(item)
+    ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1263, in sendall
+    v = self.send(byte_view[count:])
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1232, in send
+    return self._sslobj.write(data)
+           ~~~~~~~~~~~~~~~~~~^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/consumer/consumer.py", line 340, in start
+    blueprint.start(self)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/consumer/consumer.py", line 746, in start
+    c.loop(*c.loop_args())
+    ~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/loops.py", line 97, in asynloop
+    next(loop)
+    ~~~~^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/asynchronous/hub.py", line 377, in create_loop
+    cb(*cbargs)
+    ~~^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 1394, in on_readable
+    self.cycle.on_readable(fileno)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 579, in on_readable
+    chan.handlers[type]()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 931, in _receive
+    ret.append(self._receive_one(c))
+               ~~~~~~~~~~~~~~~~~^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 941, in _receive_one
+    response = c.parse_response()
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 827, in parse_response
+    self.check_health()
+    ~~~~~~~~~~~~~~~~~^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 865, in check_health
+    conn.send_command("PING", self.HEALTH_CHECK_MESSAGE, check_health=False)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 476, in send_command
+    self.send_packed_command(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._command_packer.pack(*args),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        check_health=kwargs.get("check_health", True),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 465, in send_packed_command
+    raise ConnectionError(f"Error {errno} while writing to socket. {errmsg}.")
+redis.exceptions.ConnectionError: Error 32 while writing to socket. Broken pipe.
+[2026-05-13 21:53:16,949: WARNING/MainProcess] /Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/consumer/consumer.py:391: CPendingDeprecationWarning: 
+In Celery 5.1 we introduced an optional breaking change which
+on connection loss cancels all currently executed tasks with late acknowledgement enabled.
+These tasks cannot be acknowledged as the connection is gone, and the tasks are automatically redelivered
+back to the queue. You can enable this behavior using the worker_cancel_long_running_tasks_on_connection_loss
+setting. In Celery 5.1 it is set to False by default. The setting will be set to True by default in Celery 6.0.
+
+  warnings.warn(CANCEL_TASKS_BY_DEFAULT, CPendingDeprecationWarning)
+
+[2026-05-13 22:13:45,204: INFO/MainProcess] Connected to rediss://default:**@super-heron-89606.upstash.io:6379//
+[2026-05-13 22:13:45,760: INFO/MainProcess] mingle: searching for neighbors
+[2026-05-13 22:13:47,193: INFO/MainProcess] mingle: all alone
+[2026-05-13 22:45:56,538: WARNING/MainProcess] consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 454, in send_packed_command
+    self._sock.sendall(item)
+    ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1263, in sendall
+    v = self.send(byte_view[count:])
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1232, in send
+    return self._sslobj.write(data)
+           ~~~~~~~~~~~~~~~~~~^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/consumer/consumer.py", line 340, in start
+    blueprint.start(self)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/consumer/consumer.py", line 746, in start
+    c.loop(*c.loop_args())
+    ~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/loops.py", line 97, in asynloop
+    next(loop)
+    ~~~~^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/asynchronous/hub.py", line 377, in create_loop
+    cb(*cbargs)
+    ~~^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 1394, in on_readable
+    self.cycle.on_readable(fileno)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 579, in on_readable
+    chan.handlers[type]()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 931, in _receive
+    ret.append(self._receive_one(c))
+               ~~~~~~~~~~~~~~~~~^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 941, in _receive_one
+    response = c.parse_response()
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 827, in parse_response
+    self.check_health()
+    ~~~~~~~~~~~~~~~~~^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 865, in check_health
+    conn.send_command("PING", self.HEALTH_CHECK_MESSAGE, check_health=False)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 476, in send_command
+    self.send_packed_command(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._command_packer.pack(*args),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        check_health=kwargs.get("check_health", True),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 465, in send_packed_command
+    raise ConnectionError(f"Error {errno} while writing to socket. {errmsg}.")
+redis.exceptions.ConnectionError: Error 32 while writing to socket. Broken pipe.
+[2026-05-14 22:59:15,675: WARNING/MainProcess] /Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/consumer/consumer.py:391: CPendingDeprecationWarning: 
+In Celery 5.1 we introduced an optional breaking change which
+on connection loss cancels all currently executed tasks with late acknowledgement enabled.
+These tasks cannot be acknowledged as the connection is gone, and the tasks are automatically redelivered
+back to the queue. You can enable this behavior using the worker_cancel_long_running_tasks_on_connection_loss
+setting. In Celery 5.1 it is set to False by default. The setting will be set to True by default in Celery 6.0.
+
+  warnings.warn(CANCEL_TASKS_BY_DEFAULT, CPendingDeprecationWarning)
+
+[2026-05-14 22:59:15,682: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@super-heron-89606.upstash.io:6379//: Error 8 connecting to super-heron-89606.upstash.io:6379. nodename nor servname provided, or not known..
+Trying again in 2.00 seconds... (1/100)
+
+[2026-05-14 22:59:17,695: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@super-heron-89606.upstash.io:6379//: Error 8 connecting to super-heron-89606.upstash.io:6379. nodename nor servname provided, or not known..
+Trying again in 4.00 seconds... (2/100)
+
+[2026-05-14 23:16:57,493: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@super-heron-89606.upstash.io:6379//: Error 8 connecting to super-heron-89606.upstash.io:6379. nodename nor servname provided, or not known..
+Trying again in 6.00 seconds... (3/100)
+
+[2026-05-14 23:24:56,327: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@super-heron-89606.upstash.io:6379//: Error 8 connecting to super-heron-89606.upstash.io:6379. nodename nor servname provided, or not known..
+Trying again in 8.00 seconds... (4/100)
+
+[2026-05-14 23:42:51,667: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@super-heron-89606.upstash.io:6379//: Error 8 connecting to super-heron-89606.upstash.io:6379. nodename nor servname provided, or not known..
+Trying again in 10.00 seconds... (5/100)
+
+[2026-05-15 00:16:16,297: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@super-heron-89606.upstash.io:6379//: Error 8 connecting to super-heron-89606.upstash.io:6379. nodename nor servname provided, or not known..
+Trying again in 12.00 seconds... (6/100)
+
+[2026-05-15 00:47:46,103: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@super-heron-89606.upstash.io:6379//: Error 8 connecting to super-heron-89606.upstash.io:6379. nodename nor servname provided, or not known..
+Trying again in 14.00 seconds... (7/100)
+
+[2026-05-15 01:37:54,509: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@super-heron-89606.upstash.io:6379//: Error 8 connecting to super-heron-89606.upstash.io:6379. nodename nor servname provided, or not known..
+Trying again in 16.00 seconds... (8/100)
+
+[2026-05-15 01:44:43,804: INFO/MainProcess] Connected to rediss://default:**@super-heron-89606.upstash.io:6379//
+[2026-05-15 01:44:44,242: INFO/MainProcess] mingle: searching for neighbors
+[2026-05-15 01:44:46,663: INFO/MainProcess] mingle: sync with 1 nodes
+[2026-05-15 01:44:46,663: INFO/MainProcess] mingle: sync complete
+[2026-05-15 02:18:36,015: WARNING/MainProcess] consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/virtual/base.py", line 951, in create_channel
+    return self._avail_channels.pop()
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+IndexError: pop from empty list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 512, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/_parsers/resp2.py", line 15, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/_parsers/resp2.py", line 25, in _read_response
+    raw = self._buffer.readline()
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/_parsers/socket.py", line 115, in readline
+    self._read_from_socket()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/_parsers/socket.py", line 65, in _read_from_socket
+    data = self._sock.recv(socket_read_size)
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1285, in recv
+    return self.read(buflen)
+           ~~~~~~~~~^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1140, in read
+    return self._sslobj.read(len)
+           ~~~~~~~~~~~~~~~~~^^^^^
+OSError: [Errno 49] Can't assign requested address
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/consumer/consumer.py", line 340, in start
+    blueprint.start(self)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/consumer/gossip.py", line 107, in start
+    super().start(c)
+    ~~~~~~~~~~~~~^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/bootsteps.py", line 396, in start
+    channel = c.connection.channel()
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/connection.py", line 305, in channel
+    chan = self.transport.create_channel(self.connection)
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/virtual/base.py", line 953, in create_channel
+    channel = self.Channel(connection)
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 757, in __init__
+    self.client.ping()
+    ~~~~~~~~~~~~~~~~^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/commands/core.py", line 1217, in ping
+    return self.execute_command("PING", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 545, in execute_command
+    return conn.retry.call_with_retry(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        lambda: self._send_command_parse_response(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        lambda error: self._disconnect_raise(conn, error),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/retry.py", line 49, in call_with_retry
+    fail(error)
+    ~~~~^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 549, in <lambda>
+    lambda error: self._disconnect_raise(conn, error),
+                  ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 535, in _disconnect_raise
+    raise error
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/retry.py", line 46, in call_with_retry
+    return do()
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 546, in <lambda>
+    lambda: self._send_command_parse_response(
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        conn, command_name, *args, **options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 522, in _send_command_parse_response
+    return self.parse_response(conn, command_name, **options)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 562, in parse_response
+    response = connection.read_response()
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 520, in read_response
+    raise ConnectionError(
+        f"Error while reading from {host_error}" f" : {e.args}"
+    )
+redis.exceptions.ConnectionError: Error while reading from super-heron-89606.upstash.io:6379 : (49, "Can't assign requested address")
+[2026-05-15 02:36:16,354: WARNING/MainProcess] /Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/consumer/consumer.py:391: CPendingDeprecationWarning: 
+In Celery 5.1 we introduced an optional breaking change which
+on connection loss cancels all currently executed tasks with late acknowledgement enabled.
+These tasks cannot be acknowledged as the connection is gone, and the tasks are automatically redelivered
+back to the queue. You can enable this behavior using the worker_cancel_long_running_tasks_on_connection_loss
+setting. In Celery 5.1 it is set to False by default. The setting will be set to True by default in Celery 6.0.
+
+  warnings.warn(CANCEL_TASKS_BY_DEFAULT, CPendingDeprecationWarning)
+
+[2026-05-15 02:36:16,357: ERROR/MainProcess] Error on restarting Control: AttributeError("'NoneType' object has no attribute 'hostname'")
+Traceback (most recent call last):
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/virtual/base.py", line 951, in create_channel
+    return self._avail_channels.pop()
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+IndexError: pop from empty list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 512, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/_parsers/resp2.py", line 15, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/_parsers/resp2.py", line 25, in _read_response
+    raw = self._buffer.readline()
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/_parsers/socket.py", line 115, in readline
+    self._read_from_socket()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/_parsers/socket.py", line 65, in _read_from_socket
+    data = self._sock.recv(socket_read_size)
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1285, in recv
+    return self.read(buflen)
+           ~~~~~~~~~^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1140, in read
+    return self._sslobj.read(len)
+           ~~~~~~~~~~~~~~~~~^^^^^
+OSError: [Errno 49] Can't assign requested address
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/consumer/consumer.py", line 340, in start
+    blueprint.start(self)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/consumer/gossip.py", line 107, in start
+    super().start(c)
+    ~~~~~~~~~~~~~^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/bootsteps.py", line 396, in start
+    channel = c.connection.channel()
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/connection.py", line 305, in channel
+    chan = self.transport.create_channel(self.connection)
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/virtual/base.py", line 953, in create_channel
+    channel = self.Channel(connection)
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 757, in __init__
+    self.client.ping()
+    ~~~~~~~~~~~~~~~~^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/commands/core.py", line 1217, in ping
+    return self.execute_command("PING", **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 545, in execute_command
+    return conn.retry.call_with_retry(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        lambda: self._send_command_parse_response(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        lambda error: self._disconnect_raise(conn, error),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/retry.py", line 49, in call_with_retry
+    fail(error)
+    ~~~~^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 549, in <lambda>
+    lambda error: self._disconnect_raise(conn, error),
+                  ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 535, in _disconnect_raise
+    raise error
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/retry.py", line 46, in call_with_retry
+    return do()
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 546, in <lambda>
+    lambda: self._send_command_parse_response(
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        conn, command_name, *args, **options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 522, in _send_command_parse_response
+    return self.parse_response(conn, command_name, **options)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 562, in parse_response
+    response = connection.read_response()
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 520, in read_response
+    raise ConnectionError(
+        f"Error while reading from {host_error}" f" : {e.args}"
+    )
+redis.exceptions.ConnectionError: Error while reading from super-heron-89606.upstash.io:6379 : (49, "Can't assign requested address")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/bootsteps.py", line 148, in send_all
+    fun(parent, *args)
+    ~~~^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/pidbox.py", line 61, in stop
+    self.consumer = self._close_channel(c)
+                    ~~~~~~~~~~~~~~~~~~~^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/pidbox.py", line 69, in _close_channel
+    ignore_errors(c, self.node.channel.close)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/common.py", line 325, in ignore_errors
+    return fun(*args, **kwargs)
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 1122, in close
+    super().close()
+    ~~~~~~~~~~~~~^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/virtual/base.py", line 794, in close
+    self.basic_cancel(consumer)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 863, in basic_cancel
+    return self._basic_cancel(consumer_tag)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 875, in _basic_cancel
+    self._unsubscribe_from(queue)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 907, in _unsubscribe_from
+    c = self.subclient
+        ^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/utils/objects.py", line 40, in __get__
+    return super().__get__(instance, owner)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/functools.py", line 1126, in __get__
+    val = self.func(instance)
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 1308, in subclient
+    client = self._create_client(asynchronous=True)
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 1259, in _create_client
+    return self.Client(connection_pool=self.async_pool)
+                                       ^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 1297, in async_pool
+    self._async_pool = self._get_pool(asynchronous=True)
+                       ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 1263, in _get_pool
+    params = self._connparams(asynchronous=asynchronous)
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 1172, in _connparams
+    'host': conninfo.hostname or '127.0.0.1',
+            ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'hostname'
+[2026-05-15 02:36:16,366: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@super-heron-89606.upstash.io:6379//: Error 8 connecting to super-heron-89606.upstash.io:6379. nodename nor servname provided, or not known..
+Trying again in 2.00 seconds... (1/100)
+
+[2026-05-15 02:36:18,376: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@super-heron-89606.upstash.io:6379//: Error 8 connecting to super-heron-89606.upstash.io:6379. nodename nor servname provided, or not known..
+Trying again in 4.00 seconds... (2/100)
+
+[2026-05-15 02:53:38,232: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@super-heron-89606.upstash.io:6379//: Error 8 connecting to super-heron-89606.upstash.io:6379. nodename nor servname provided, or not known..
+Trying again in 6.00 seconds... (3/100)
+
+[2026-05-15 03:11:11,067: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@super-heron-89606.upstash.io:6379//: Error 8 connecting to super-heron-89606.upstash.io:6379. nodename nor servname provided, or not known..
+Trying again in 8.00 seconds... (4/100)
+
+[2026-05-15 03:42:29,656: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@super-heron-89606.upstash.io:6379//: Error 8 connecting to super-heron-89606.upstash.io:6379. nodename nor servname provided, or not known..
+Trying again in 10.00 seconds... (5/100)
+
+[2026-05-15 04:14:06,252: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@super-heron-89606.upstash.io:6379//: Error 8 connecting to super-heron-89606.upstash.io:6379. nodename nor servname provided, or not known..
+Trying again in 12.00 seconds... (6/100)
+
+[2026-05-15 04:47:06,877: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@super-heron-89606.upstash.io:6379//: Error 8 connecting to super-heron-89606.upstash.io:6379. nodename nor servname provided, or not known..
+Trying again in 14.00 seconds... (7/100)
+
+[2026-05-15 05:20:45,374: INFO/MainProcess] Connected to rediss://default:**@super-heron-89606.upstash.io:6379//
+[2026-05-15 05:20:45,624: INFO/MainProcess] mingle: searching for neighbors
+[2026-05-15 05:20:48,079: INFO/MainProcess] mingle: sync with 1 nodes
+[2026-05-15 05:20:48,081: INFO/MainProcess] mingle: sync complete
+[2026-05-15 05:20:50,284: WARNING/MainProcess] Substantial drift from celery@0f985e939853 may mean clocks are out of sync.  Current drift is 21600 seconds.  [orig: 2026-05-15 05:20:50.284381 recv: 2026-05-14 23:20:50.255586]
+[2026-05-15 07:10:02,747: INFO/MainProcess] missed heartbeat from celery@0f985e939853
+[2026-05-15 07:10:02,772: WARNING/MainProcess] consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 454, in send_packed_command
+    self._sock.sendall(item)
+    ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1263, in sendall
+    v = self.send(byte_view[count:])
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1232, in send
+    return self._sslobj.write(data)
+           ~~~~~~~~~~~~~~~~~~^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/consumer/consumer.py", line 340, in start
+    blueprint.start(self)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/consumer/consumer.py", line 746, in start
+    c.loop(*c.loop_args())
+    ~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/celery/worker/loops.py", line 97, in asynloop
+    next(loop)
+    ~~~~^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/asynchronous/hub.py", line 377, in create_loop
+    cb(*cbargs)
+    ~~^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 1394, in on_readable
+    self.cycle.on_readable(fileno)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 579, in on_readable
+    chan.handlers[type]()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 931, in _receive
+    ret.append(self._receive_one(c))
+               ~~~~~~~~~~~~~~~~~^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/kombu/transport/redis.py", line 941, in _receive_one
+    response = c.parse_response()
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 827, in parse_response
+    self.check_health()
+    ~~~~~~~~~~~~~~~~~^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/client.py", line 865, in check_health
+    conn.send_command("PING", self.HEALTH_CHECK_MESSAGE, check_health=False)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 476, in send_command
+    self.send_packed_command(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._command_packer.pack(*args),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        check_health=kwargs.get("check_health", True),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/harshtailor/Desktop/healthsignal/backend/venv2/lib/python3.14/site-packages/redis/connection.py", line 465, in send_packed_command
+    raise ConnectionError(f"Error {errno} while writing to socket. {errmsg}.")
+redis.exceptions.ConnectionError: Error 32 while writing to socket. Broken pipe.

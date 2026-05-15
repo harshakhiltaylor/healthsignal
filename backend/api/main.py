@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from prometheus_client import make_asgi_app
 from db.session import init_db
-from api.routes import search, rag, evals, ingest, health, trials
+from api.routes import search, rag, evals, ingest, health, trials, newsletter
 
 logging.basicConfig(
     level=logging.INFO,
@@ -69,3 +69,4 @@ app.include_router(rag.router, prefix="/api", tags=["rag"])
 app.include_router(evals.router, prefix="/api", tags=["evals"])
 app.include_router(ingest.router, prefix="/api", tags=["ingest"])
 app.include_router(trials.router, prefix="/api", tags=["trials"])
+app.include_router(newsletter.router, prefix="/api", tags=["newsletter"])

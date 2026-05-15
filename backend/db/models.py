@@ -89,3 +89,11 @@ class IngestLog(Base):
     duration_seconds: Mapped[float | None] = mapped_column(Float)
     status: Mapped[str] = mapped_column(String(32), default="running")
     error_detail: Mapped[str | None] = mapped_column(Text)
+
+
+class NewsletterCache(Base):
+    __tablename__ = "newsletter_cache"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    generated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    topics: Mapped[list] = mapped_column(JSON, nullable=False)

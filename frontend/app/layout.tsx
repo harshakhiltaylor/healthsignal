@@ -41,6 +41,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <a href="/trials" className="hover:text-softly-dark transition-colors">Database</a>
               <a href="/search" className="hover:text-softly-dark transition-colors">Search</a>
               <a href="/ask" className="hover:text-softly-dark transition-colors">Ask AI</a>
+              <a href="/newsletter" className="hover:text-softly-dark transition-colors flex items-center gap-1">
+                <span>Newsletter</span>
+                <span className="text-[10px] font-bold bg-softly-coral text-white px-1.5 py-0.5 rounded-full leading-none">NEW</span>
+              </a>
               <a href="/evals" className="hover:text-softly-dark transition-colors">Evals</a>
             </div>
             <a href="/ask" className="bg-softly-dark text-white text-[14px] font-medium px-4 py-1.5 rounded-full shrink-0 hover:bg-black transition-colors ml-auto sm:ml-4">
