@@ -124,12 +124,14 @@ def generate_newsletter():
     async def _generate():
         import os
         import httpx
+        import json as _json
         from db.session import AsyncSessionLocal
         from db.models import NewsletterCache
         from sqlalchemy import text
 
+        # ── Step 1: Read rows in a short-lived session, then close it ──
+        rows = []
         async with AsyncSessionLocal() as db:
-            # Try last 24h first, fall back to 7 days
             for window in ["24 hours", "7 days", "30 days"]:
                 result = await db.execute(text(f"""
                     SELECT condition, therapeutic_area, COUNT(*) as cnt
@@ -146,7 +148,6 @@ def generate_newsletter():
                     break
 
             if not rows:
-                # Absolute fallback — top conditions across all time
                 result = await db.execute(text("""
                     SELECT condition, therapeutic_area, COUNT(*) as cnt
                     FROM trials
@@ -156,17 +157,19 @@ def generate_newsletter():
                     LIMIT 5
                 """))
                 rows = result.fetchall()
+        # DB session is now fully closed before we hit Groq
 
-            groq_api_key = os.getenv("GROQ_API_KEY", "")
-            topics = []
+        # ── Step 2: Call Groq for each topic (no DB session open) ──
+        groq_api_key = os.getenv("GROQ_API_KEY", "")
+        topics = []
 
-            async with httpx.AsyncClient(timeout=30) as http:
-                for rank, row in enumerate(rows, start=1):
-                    condition = row[0] or "Unknown"
-                    therapeutic_area = row[1] or "General Medicine"
-                    trial_count = int(row[2])
+        async with httpx.AsyncClient(timeout=30) as http:
+            for rank, row in enumerate(rows, start=1):
+                condition = row[0] or "Unknown"
+                therapeutic_area = row[1] or "General Medicine"
+                trial_count = int(row[2])
 
-                    prompt = f"""You are a medical journalist writing for a clinical research newsletter.
+                prompt = f"""You are a medical journalist writing for a clinical research newsletter.
 
 Write a short, engaging article about the clinical trial topic: "{condition}" (therapeutic area: {therapeutic_area}).
 
@@ -179,49 +182,58 @@ Respond in this exact JSON format, no markdown, no code blocks:
   "body": "Three paragraphs of plain-English clinical insight. Paragraph 1: what the condition is and why it matters. Paragraph 2: what current trials are exploring. Paragraph 3: what the future looks like for patients and researchers."
 }}"""
 
-                    try:
-                        resp = await http.post(
-                            "https://api.groq.com/openai/v1/chat/completions",
-                            headers={
-                                "Authorization": f"Bearer {groq_api_key}",
-                                "Content-Type": "application/json",
-                            },
-                            json={
-                                "model": "llama3-8b-8192",
-                                "messages": [{"role": "user", "content": prompt}],
-                                "temperature": 0.7,
-                                "max_tokens": 500,
-                            },
-                        )
-                        resp.raise_for_status()
-                        content = resp.json()["choices"][0]["message"]["content"].strip()
+                try:
+                    resp = await http.post(
+                        "https://api.groq.com/openai/v1/chat/completions",
+                        headers={
+                            "Authorization": f"Bearer {groq_api_key}",
+                            "Content-Type": "application/json",
+                        },
+                        json={
+                            "model": "llama3-8b-8192",
+                            "messages": [{"role": "user", "content": prompt}],
+                            "temperature": 0.7,
+                            "max_tokens": 500,
+                        },
+                    )
+                    resp.raise_for_status()
+                    content = resp.json()["choices"][0]["message"]["content"].strip()
+                    article = _json.loads(content)
+                except Exception as e:
+                    logger.warning(f"Groq generation failed for {condition}: {e}")
+                    article = {
+                        "headline": f"Spotlight: {condition} Clinical Trials",
+                        "teaser": f"Researchers are actively studying {condition} across {trial_count} ongoing trials.",
+                        "body": (
+                            f"Clinical research into {condition} continues to grow. With {trial_count} trials "
+                            f"currently registered, this area represents an active frontier in medical research.\n\n"
+                            f"Trials across multiple phases are investigating a range of therapeutic approaches. "
+                            f"From early-stage safety studies to large Phase 3 efficacy trials, the research "
+                            f"landscape is diverse and rapidly evolving.\n\n"
+                            f"For patients and clinicians alike, the expanding evidence base offers new hope. "
+                            f"As results emerge, they will shape treatment guidelines and open doors to better, "
+                            f"more personalised care."
+                        ),
+                    }
 
-                        import json as _json
-                        article = _json.loads(content)
-                    except Exception as e:
-                        logger.warning(f"Groq generation failed for {condition}: {e}")
-                        article = {
-                            "headline": f"Spotlight: {condition} Clinical Trials",
-                            "teaser": f"Researchers are actively studying {condition} across {trial_count} ongoing trials.",
-                            "body": f"Clinical research into {condition} continues to grow. With {trial_count} trials currently registered, this area represents an active frontier in medical research. Scientists are exploring new interventions, dosing strategies, and patient populations to improve outcomes.\n\nTrials across multiple phases are investigating a range of therapeutic approaches. From early-stage safety studies to large Phase 3 efficacy trials, the research landscape is diverse and rapidly evolving.\n\nFor patients and clinicians alike, the expanding evidence base offers new hope. As results from these trials emerge, they will shape treatment guidelines and open doors to better, more personalised care.",
-                        }
+                topics.append({
+                    "rank": rank,
+                    "condition": condition,
+                    "therapeutic_area": therapeutic_area,
+                    "trial_count": trial_count,
+                    "headline": article.get("headline", f"Trending: {condition}"),
+                    "teaser": article.get("teaser", ""),
+                    "body": article.get("body", ""),
+                })
 
-                    topics.append({
-                        "rank": rank,
-                        "condition": condition,
-                        "therapeutic_area": therapeutic_area,
-                        "trial_count": trial_count,
-                        "headline": article.get("headline", f"Trending: {condition}"),
-                        "teaser": article.get("teaser", ""),
-                        "body": article.get("body", ""),
-                    })
-
-            # Save to DB
+        # ── Step 3: Write to DB in a fresh session ──
+        async with AsyncSessionLocal() as db:
             cache_entry = NewsletterCache(topics=topics)
             db.add(cache_entry)
             await db.commit()
-            logger.info(f"Newsletter cache updated with {len(topics)} topics")
-            return {"topics_generated": len(topics)}
+
+        logger.info(f"Newsletter cache updated with {len(topics)} topics")
+        return {"topics_generated": len(topics)}
 
     return _run_async(_generate())
 
