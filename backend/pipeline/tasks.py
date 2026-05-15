@@ -77,17 +77,25 @@ def re_embed_all_trials():
         from agents.router import run_agent_dag
         from sqlalchemy import select
 
+        # Fetch only the IDs first to save memory and avoid asyncpg timeouts
         async with AsyncSessionLocal() as db:
             result = await db.execute(
-                select(Trial).outerjoin(TrialChunk).where(TrialChunk.id == None)
+                select(Trial.id).outerjoin(TrialChunk).where(TrialChunk.id == None)
             )
-            trials = result.scalars().all()
+            trial_ids = result.scalars().all()
 
-        logger.info(f"Re-embedding {len(trials)} trials from database...")
+        logger.info(f"Re-embedding {len(trial_ids)} trials from database...")
         success, failed = 0, 0
 
-        for trial in trials:
+        for t_id in trial_ids:
             try:
+                # Fetch full trial one by one in a short-lived session
+                async with AsyncSessionLocal() as db:
+                    trial = await db.get(Trial, t_id)
+                
+                if not trial:
+                    continue
+
                 trial_dict = {
                     "id": trial.id,
                     "title": trial.title or "",
@@ -103,13 +111,13 @@ def re_embed_all_trials():
                 await run_agent_dag(trial_dict)
                 success += 1
                 if success % 10 == 0:
-                    logger.info(f"Re-embed progress: {success}/{len(trials)} done")
+                    logger.info(f"Re-embed progress: {success}/{len(trial_ids)} done")
             except Exception as e:
-                logger.error(f"Re-embed failed for {trial.id}: {e}")
+                logger.error(f"Re-embed failed for {t_id}: {e}")
                 failed += 1
 
         logger.info(f"Re-embed complete: {success} succeeded, {failed} failed")
-        return {"success": success, "failed": failed, "total": len(trials)}
+        return {"success": success, "failed": failed, "total": len(trial_ids)}
 
     return _run_async(_re_embed())
 
